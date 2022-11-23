@@ -7,11 +7,11 @@ namespace LR_parser
     {
         /// <summary>
         /// Reads a csv from a given file path and returns it as a string[,]
-        /// 
         /// Could just leave it as is an return a List<string[]>, but it seems a bit confusing
         /// 
         /// P.S. Thanks to the top answer under this question:
         /// https://stackoverflow.com/questions/2081418/parsing-csv-files-in-c-with-header
+        /// P.P.S. Sorry for reinventing the wheel
         /// </summary>
         /// <param name="path"> Path of the CSV file</param>
         /// <returns></returns>
