@@ -18,7 +18,7 @@ namespace LR_parser
         public static string[,] Parse(string path)
         {
             //reading the CSV as List<string[]>
-            List<string[]> contentList = new List<string[]>();
+            List<string[]> contentList = new();
             TextFieldParser parser;
             try
             {
