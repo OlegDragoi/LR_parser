@@ -3,7 +3,7 @@ using Microsoft.VisualBasic.FileIO;
 
 namespace LR_parser
 {
-    public static class CSV_Parser
+    public static class CsvParser
     {
         /// <summary>
         /// Reads a csv from a given file path and returns it as a string[,]
