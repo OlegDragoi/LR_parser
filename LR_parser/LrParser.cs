@@ -41,7 +41,7 @@ namespace LR_parser
                     if (inputString.StartsWith(checkedSign))       
                     {
                         inputStackList.Add(checkedSign);
-                        inputString.Remove(0, checkedSign.Length - 1);
+                        inputString.Remove(0, checkedSign.Length);
                         break;
                     }
                 }
