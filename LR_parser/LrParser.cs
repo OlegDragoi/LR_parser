@@ -58,7 +58,33 @@ namespace LR_parser
 
         private bool tryParse()
         {
-            throw new NotImplementedException();
+            int x = 0 , y = 0;
+            string lastInput = inputStack.Peek();
+            string lastCompute = inputStack.Peek();
+            for (int i = 1; i < ruleSystem.GetLength(0); i++)
+            {
+                if (ruleSystem[i, 0] == lastInput) x = i;
+                break;
+            }
+            for (int i = 1; i < ruleSystem.GetLength(1); i++)
+            {
+                if (ruleSystem[0, i] == lastCompute) y = i;
+                break;
+            }
+
+            if (ruleSystem[x, y] == "") return false;
+            if (ruleSystem[x, y] == "accept") return false;
+
+            if (ruleSystem[x, y] == "pop")
+            {
+                inputStack.Pop();
+                inputStack.Pop();
+                return true;
+            }
+
+
+            return true;
+
         }
 
         public List<string> getResult()
@@ -69,7 +95,8 @@ namespace LR_parser
                 result.Add(this.ToString());
             } while (this.tryParse());
 
-            if(computingStack.Peek() != "#")
+            if(computingStack.Peek() != "#" &&
+               inputStack.Peek() != "#")
             {
                 result.Add("Wrong input!");
             }

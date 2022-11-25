@@ -53,7 +53,7 @@ namespace LR_parser
             {
                 for (int j = 0; j < contentArray.GetLength(1); j++)
                 {
-                    contentArray[i, j] = contentList[i][j];
+                    contentArray[i, j] = contentList[i][j].Trim();
                 }
             }
             parser.Close();
