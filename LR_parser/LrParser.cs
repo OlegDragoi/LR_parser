@@ -11,6 +11,7 @@ namespace LR_parser
     {
         private string[,] ruleSystem;
         private string input;
+        private string nr;
         private Stack<string> inputStack;
         private Stack<string> computingStack;
 
@@ -55,6 +56,33 @@ namespace LR_parser
             }
         }
 
+        private bool tryParse()
+        {
+            throw new NotImplementedException();
+        }
 
+        public List<string> getResult()
+        {
+            List<string> result = new();
+            do
+            {
+                result.Add(this.ToString());
+            } while (this.tryParse());
+
+            if(computingStack.Peek() != "#")
+            {
+                result.Add("Wrong input!");
+            }
+            return result;
+        }
+
+        public override string ToString()
+        {
+            StringBuilder sb = new();
+            sb.Append('(').Append(inputStack.ToString()).Append(',')
+                          .Append(computingStack.ToString()).Append(',')
+                          .Append(nr).Append(')');
+            return sb.ToString();
+        }
     }
 }
