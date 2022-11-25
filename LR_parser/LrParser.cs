@@ -60,7 +60,7 @@ namespace LR_parser
         {
             int x = 0 , y = 0;
             string lastInput = inputStack.Peek();
-            string lastCompute = inputStack.Peek();
+            string lastCompute = computingStack.Peek();
             for (int i = 1; i < ruleSystem.GetLength(0); i++)
             {
                 if (ruleSystem[i, 0] == lastInput) x = i;
@@ -72,19 +72,44 @@ namespace LR_parser
                 break;
             }
 
-            if (ruleSystem[x, y] == "") return false;
-            if (ruleSystem[x, y] == "accept") return false;
+            string inspectedCell = (string)ruleSystem[x, y].Clone();
 
-            if (ruleSystem[x, y] == "pop")
+            if (inspectedCell == "") return false;
+            if (inspectedCell == "accept") return false;
+
+            if (inspectedCell == "pop")
             {
                 inputStack.Pop();
-                inputStack.Pop();
+                computingStack.Pop();
                 return true;
             }
 
+            string[] instructions = inspectedCell.Substring(1, inspectedCell.Length - 2)    //deletes the starting '(' and ending ')'
+                                                 .Split(",");                               //separates the instructions
+
+            List<string> computingStackAdd = new();
+            while (instructions[0].Length > 0)
+            {
+                for (int i = 1; i < ruleSystem.GetLength(1); i++)
+                {
+                    //if the input string contains an element of the first row of the rule system
+                    string checkedSign = ruleSystem[0, i];
+                    if (instructions[0].StartsWith(checkedSign))
+                    {
+                        computingStackAdd.Add(checkedSign);
+                        instructions[0].Remove(0, checkedSign.Length);
+                        break;
+                    }
+                }
+            }
+            computingStack.Pop();
+            for (int i = computingStackAdd.Count - 1; i >= 0; i--)
+            {
+                this.computingStack.Push(computingStackAdd[i]);
+            }
+            this.nr += instructions[1];
 
             return true;
-
         }
 
         public List<string> getResult()
