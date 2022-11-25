@@ -42,7 +42,7 @@ namespace LR_parser
                     if (inputString.StartsWith(checkedSign))       
                     {
                         inputStackList.Add(checkedSign);
-                        inputString.Remove(0, checkedSign.Length);
+                        inputString = inputString.Remove(0, checkedSign.Length);
                         break;
                     }
                 }
@@ -56,7 +56,7 @@ namespace LR_parser
             }
         }
 
-        private bool tryParse()
+        private bool TryParse()
         {
             int x = 0 , y = 0;
             string lastInput = inputStack.Peek();
@@ -86,18 +86,20 @@ namespace LR_parser
 
             string[] instructions = inspectedCell.Substring(1, inspectedCell.Length - 2)    //deletes the starting '(' and ending ')'
                                                  .Split(",");                               //separates the instructions
+            string computingStackInstruction = instructions[0];
+            string nrAdd = instructions[1];
 
             List<string> computingStackAdd = new();
-            while (instructions[0].Length > 0)
+            while (computingStackInstruction.Length > 0)
             {
                 for (int i = 1; i < ruleSystem.GetLength(1); i++)
                 {
                     //if the input string contains an element of the first row of the rule system
                     string checkedSign = ruleSystem[0, i];
-                    if (instructions[0].StartsWith(checkedSign))
+                    if (computingStackInstruction.StartsWith(checkedSign))
                     {
                         computingStackAdd.Add(checkedSign);
-                        instructions[0].Remove(0, checkedSign.Length);
+                        computingStackInstruction = computingStackInstruction.Remove(0, checkedSign.Length);
                         break;
                     }
                 }
@@ -107,18 +109,18 @@ namespace LR_parser
             {
                 this.computingStack.Push(computingStackAdd[i]);
             }
-            this.nr += instructions[1];
+            this.nr += nrAdd;
 
             return true;
         }
 
-        public List<string> getResult()
+        public List<string> GetResult()
         {
             List<string> result = new();
             do
             {
                 result.Add(this.ToString());
-            } while (this.tryParse());
+            } while (this.TryParse());
 
             if(computingStack.Peek() != "#" &&
                inputStack.Peek() != "#")
